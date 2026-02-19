@@ -1,3 +1,10 @@
 {
-  "title": "oiKonomos"
+  "title": "oiKonomos",
+  "home": "Home",
+  "hero": {
+    "headline": "Menos conta,",
+    "headlineAccent": "mais controle.",
+    "description": "Um painel para seus gastos. Simples de ver, fácil de controlar.",
+    "cta": "Começar agora"
+  }
 }

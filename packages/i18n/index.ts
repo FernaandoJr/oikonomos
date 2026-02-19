@@ -4,11 +4,9 @@ import i18n, { t } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 // PT-BR
-import commonPtBR from './locales/ptBR/common.json';
+import commonPtBR from './locales/ptBR/common.json' with { type: 'json' };
 // EN-US
-import commonEnUS from './locales/enUS/common.json';
-// IT-IT
-import commonItIT from './locales/itIT/common.json';
+import commonEnUS from './locales/enUS/common.json' with { type: 'json' };
 
 const resources = {
   ptBR: {
@@ -16,9 +14,6 @@ const resources = {
   },
   enUS: {
     common: commonEnUS,
-  },
-  itIT: {
-    common: { ...commonItIT },
   },
 };
 
@@ -28,7 +23,8 @@ const getInitialLanguage = (): string => {
     const cookies = document.cookie.split(';');
     const localeCookie = cookies.find((c) => c.trim().startsWith('NEXT_LOCALE='));
     if (localeCookie) {
-      return localeCookie.split('=')[1].trim();
+      const value = localeCookie.split('=')[1];
+      if (value) return value.trim();
     }
   }
   return 'ptBR';
