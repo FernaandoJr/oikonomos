@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {isProduction && (
+        {!isProduction && (
           <Script
             src="//unpkg.com/react-scan/dist/auto.global.js"
             crossOrigin="anonymous"
