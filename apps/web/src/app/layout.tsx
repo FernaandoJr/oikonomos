@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: 'oiKonomos is a platform',
 };
 
+const isProduction = process.env.NEXT_PUBLIC_ENV === 'P';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-          crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
+        {isProduction && (
+          <Script
+            src="//unpkg.com/react-scan/dist/auto.global.js"
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+          />
+        )}
       </head>
       <body className={`${outfit.variable} ${firaCode.variable} antialiased`}>
         <ThemeProvider
