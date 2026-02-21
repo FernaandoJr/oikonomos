@@ -9,7 +9,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-export function Header() {
+interface HeaderProps {
+  disableSticky?: boolean;
+}
+
+export function Header({ disableSticky = false }: HeaderProps) {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(10);
   const { t } = useTranslation();
@@ -32,10 +36,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 right-0 left-0 z-50 mx-auto w-full max-w-5xl border-b border-transparent select-none md:transition-all md:ease-out',
+        'z-50 mx-auto w-full max-w-5xl border-b border-transparent select-none md:transition-all md:ease-out',
+        !disableSticky && 'fixed top-0 right-0 left-0',
+        disableSticky && 'relative',
         {
           'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border rounded-b-md backdrop-blur-lg md:max-w-4xl md:shadow':
-            scrolled && !open,
+            scrolled && !open && !disableSticky,
           'bg-background/90': open,
         },
       )}
@@ -44,7 +50,7 @@ export function Header() {
         className={cn(
           'flex h-14 w-full items-center justify-between px-4 md:h-12 md:transition-all md:ease-out',
           {
-            'md:px-2': scrolled,
+            'md:px-2': scrolled && !disableSticky,
           },
         )}
       >
@@ -64,7 +70,11 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Button variant="outline">{t('signIn')}</Button>
+          <Link href="/auth">
+            <Button variant="outline" className="cursor-pointer">
+              {t('signIn')}
+            </Button>
+          </Link>
         </div>
         <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="md:hidden">
           <MenuToggleIcon open={open} className="size-5" duration={300} />
@@ -95,12 +105,11 @@ export function Header() {
               </Link>
             ))}
           </div>
-          <div className="flex flex-col gap-2">
-            <Button variant="outline" className="w-full">
+          <Link href="/auth">
+            <Button variant="default" className="w-full cursor-pointer">
               {t('signIn')}
             </Button>
-            <Button className="w-full">{t('getStarted')}</Button>
-          </div>
+          </Link>
         </div>
       </div>
     </header>
